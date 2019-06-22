@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addModel } from './actions/computers'
-
+import ModelDetails from './components/ModelDetails';
 import './App.css';
 
 class App extends Component {
-  state = { computer: {} }
+  state = { computer: '' }
 
   data = [
     {
@@ -41,21 +41,34 @@ class App extends Component {
   }
 
   handleOnClick = () => {
-    console.log('this.state.computer:',this.state.computer);
-    console.log('objectComputer:', this.data.find(computer => computer.name === this.state.computer));
-    
-    this.props.addModel(this.data.find(computer => computer.name === this.state.computer))
+    if (this.state.computer !== '') {
+      this.props.addModel(this.data.find(computer => computer.name === this.state.computer))
+    }
+  }
+
+  printComputerModels = () => {
+    return this.props.computers.map(
+      computer =>
+        <ModelDetails
+          name={computer.name}
+          manufacturer={computer.manufacturer}
+          year={computer.year}
+          origin={computer.origin}
+        />
+    )
   }
 
   render() {
+    console.log('here', this.props.computers);
+
     return (
       <div className="App">
-        <select value={this.state.computers} onChange={this.updateSelection}>
-          <option value="">-- pick a model --</option>
-          {this.data.map(computer => <option value={computer.name}>{computer.name} ({computer.year}) </option>)}
+        <select value={this.state.computer} onChange={this.updateSelection}>
+          <option key='default' value="">-- pick a model --</option>
+          {this.data.map(computer => <option key={computer.name} value={computer.name}>{computer.name} ({computer.year}) </option>)}
         </select>
         <button onClick={this.handleOnClick}>Add</button>
-
+        {this.printComputerModels()}
       </div>
     )
   }
@@ -63,7 +76,7 @@ class App extends Component {
 
 const mapStatetoProps = (state) => {
   return {
-    model: state.computers
+    computers: state.computers
   }
 }
 
