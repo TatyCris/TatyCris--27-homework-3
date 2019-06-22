@@ -50,6 +50,7 @@ class App extends Component {
     return this.props.computers.map(
       computer =>
         <ModelDetails
+          key={this.keyGenerator()}
           name={computer.name}
           manufacturer={computer.manufacturer}
           year={computer.year}
@@ -58,9 +59,11 @@ class App extends Component {
     )
   }
 
-  render() {
-    console.log('here', this.props.computers);
+  keyGenerator = () => {
+    return Math.random()*1000
+  }
 
+  render() {
     return (
       <div className="App">
         <select value={this.state.computer} onChange={this.updateSelection}>

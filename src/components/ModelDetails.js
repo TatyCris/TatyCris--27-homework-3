@@ -5,10 +5,10 @@ export default class ModelDetails extends Component {
         return (
             <div>
                 <ul>
-                    <li>Name: {this.props.name}</li>
-                    <li>Manufacturer: {this.props.manufacturer}</li>
-                    <li>Year: {this.props.year}</li>
-                    <li>Origin: {this.props.origin}</li>
+                    <li key={this.props.keyGenerator}>Name: {this.props.name}</li>
+                    <li key={this.props.keyGenerator}>Manufacturer: {this.props.manufacturer}</li>
+                    <li key={this.props.keyGenerator}>Year: {this.props.year}</li>
+                    <li key={this.props.keyGenerator}>Origin: {this.props.origin}</li>
                 </ul>
             </div>
         )
