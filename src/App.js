@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addModel } from './actions/computers'
+
 import './App.css';
 
-export default class App extends Component {
-  state = { computers: '' }
+class App extends Component {
+  state = { computer: {} }
+
   data = [
     {
       name: "Ivel Z3",
@@ -32,8 +36,15 @@ export default class App extends Component {
 
   updateSelection = (event) => {
     this.setState({
-      computers: event.target.value
+      computer: event.target.value
     })
+  }
+
+  handleOnClick = () => {
+    console.log('this.state.computer:',this.state.computer);
+    console.log('objectComputer:', this.data.find(computer => computer.name === this.state.computer));
+    
+    this.props.addModel(this.data.find(computer => computer.name === this.state.computer))
   }
 
   render() {
@@ -43,8 +54,17 @@ export default class App extends Component {
           <option value="">-- pick a model --</option>
           {this.data.map(computer => <option value={computer.name}>{computer.name} ({computer.year}) </option>)}
         </select>
+        <button onClick={this.handleOnClick}>Add</button>
 
       </div>
     )
   }
 }
+
+const mapStatetoProps = (state) => {
+  return {
+    model: state.computers
+  }
+}
+
+export default connect(mapStatetoProps, { addModel })(App)
