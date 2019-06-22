@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css';
 
 export default class App extends Component {
+  state = { computers: '' }
   data = [
     {
       name: "Ivel Z3",
@@ -29,15 +30,18 @@ export default class App extends Component {
     }
   ]
 
+  updateSelection = (event) => {
+    this.setState({
+      computers: event.target.value
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <select>
+        <select value={this.state.computers} onChange={this.updateSelection}>
           <option value="">-- pick a model --</option>
           {this.data.map(computer => <option value={computer.name}>{computer.name} ({computer.year}) </option>)}
-          {/* label with both the name of the model and the year. */}
-          {/* The elements should also have a value attribute consisting of only the name. */}
-          {/* Add an extra default <option> element at the beginning (see the expected HTML below). */}
         </select>
 
       </div>
